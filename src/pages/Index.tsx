@@ -56,6 +56,13 @@ const features = [
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      {/* Store Name Header */}
+      <div className="bg-background border-b">
+        <div className="container mx-auto px-4 py-6 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary">Medicare</h1>
+        </div>
+      </div>
+
       {/* Hero Section */}
       <section className="relative bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">

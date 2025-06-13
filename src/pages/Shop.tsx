@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Star } from 'lucide-react';
@@ -103,6 +104,13 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Store Name Header */}
+      <div className="bg-background border-b">
+        <div className="container mx-auto px-4 py-6 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-primary">Medicare</h1>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-4">Medical Equipment</h1>
