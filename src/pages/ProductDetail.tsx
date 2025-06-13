@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, ShoppingCart, Star, Heart, Share2 } from 'lucide-react';
@@ -16,8 +15,8 @@ const products = [
     price: 299.99,
     originalPrice: 399.99,
     images: [
-      'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=600&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1576091160549-2173dba999ef?w=600&h=600&fit=crop',
       'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600&h=600&fit=crop'
     ],
     rating: 4.8,

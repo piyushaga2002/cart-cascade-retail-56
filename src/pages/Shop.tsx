@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Star } from 'lucide-react';
@@ -15,7 +14,7 @@ const products = [
     name: 'Digital Blood Pressure Monitor',
     price: 299.99,
     originalPrice: 399.99,
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=300&fit=crop',
     rating: 4.8,
     reviews: 124,
     category: 'Diagnostic',
@@ -27,7 +26,7 @@ const products = [
     name: 'Digital Thermometer',
     price: 49.99,
     originalPrice: 69.99,
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1576091160549-2173dba999ef?w=300&h=300&fit=crop',
     rating: 4.6,
     reviews: 89,
     category: 'Diagnostic',
@@ -51,7 +50,7 @@ const products = [
     name: 'Wheelchair - Standard',
     price: 199.99,
     originalPrice: 249.99,
-    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=300&h=300&fit=crop',
     rating: 4.5,
     reviews: 67,
     category: 'Mobility',
@@ -63,7 +62,7 @@ const products = [
     name: 'Pulse Oximeter',
     price: 79.99,
     originalPrice: 99.99,
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=300&fit=crop',
     rating: 4.7,
     reviews: 142,
     category: 'Diagnostic',

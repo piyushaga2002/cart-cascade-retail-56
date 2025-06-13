@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingBag, Star, Truck, Shield, CreditCard } from 'lucide-react';
@@ -12,7 +11,7 @@ const featuredProducts = [
     name: 'Digital Blood Pressure Monitor',
     price: 299.99,
     originalPrice: 399.99,
-    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400&h=400&fit=crop',
     rating: 4.8,
     reviews: 124
   },
@@ -21,7 +20,7 @@ const featuredProducts = [
     name: 'Digital Thermometer',
     price: 49.99,
     originalPrice: 69.99,
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1576091160549-2173dba999ef?w=400&h=400&fit=crop',
     rating: 4.6,
     reviews: 89
   },
