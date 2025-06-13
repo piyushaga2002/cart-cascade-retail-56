@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link to="/" className="text-2xl font-bold text-primary">
-            ShopHub
+            MedEquip Pro
           </Link>
 
           {/* Desktop Navigation */}
@@ -34,7 +34,7 @@ const Navbar = () => {
               to="/shop" 
               className={`hover:text-primary transition-colors ${isActive('/shop') ? 'text-primary font-medium' : ''}`}
             >
-              Shop
+              Equipment
             </Link>
             <Link 
               to="/about" 
@@ -54,7 +54,7 @@ const Navbar = () => {
           <div className="hidden lg:flex items-center flex-1 max-w-md mx-8">
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input placeholder="Search products..." className="pl-10" />
+              <Input placeholder="Search medical equipment..." className="pl-10" />
             </div>
           </div>
 

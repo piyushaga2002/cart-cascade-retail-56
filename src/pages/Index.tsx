@@ -9,28 +9,28 @@ import { Badge } from '@/components/ui/badge';
 const featuredProducts = [
   {
     id: 1,
-    name: 'Premium Wireless Headphones',
+    name: 'Digital Blood Pressure Monitor',
     price: 299.99,
     originalPrice: 399.99,
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&h=400&fit=crop',
     rating: 4.8,
     reviews: 124
   },
   {
     id: 2,
-    name: 'Smart Fitness Watch',
-    price: 199.99,
-    originalPrice: 249.99,
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
+    name: 'Digital Thermometer',
+    price: 49.99,
+    originalPrice: 69.99,
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=400&fit=crop',
     rating: 4.6,
     reviews: 89
   },
   {
     id: 3,
-    name: 'Professional Camera',
-    price: 899.99,
-    originalPrice: 1199.99,
-    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=400&fit=crop',
+    name: 'Stethoscope - Professional Grade',
+    price: 129.99,
+    originalPrice: 179.99,
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400&h=400&fit=crop',
     rating: 4.9,
     reviews: 203
   }
@@ -39,18 +39,18 @@ const featuredProducts = [
 const features = [
   {
     icon: Truck,
-    title: 'Free Shipping',
-    description: 'Free shipping on orders over $50'
+    title: 'Fast Delivery',
+    description: 'Fast delivery for urgent medical needs'
   },
   {
     icon: Shield,
-    title: 'Secure Payment',
-    description: 'Your payment information is safe with us'
+    title: 'Quality Assured',
+    description: 'All equipment meets medical standards'
   },
   {
     icon: CreditCard,
     title: 'Easy Returns',
-    description: '30-day return policy on all products'
+    description: '30-day return policy on all equipment'
   }
 ];
 
@@ -61,16 +61,16 @@ const Index = () => {
       <section className="relative bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            Welcome to ShopHub
+            Professional Medical Equipment
           </h1>
           <p className="text-xl md:text-2xl mb-8 opacity-90">
-            Discover amazing products at unbeatable prices
+            Quality medical equipment for healthcare professionals and patients
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" variant="secondary">
               <Link to="/shop">
                 <ShoppingBag className="w-5 h-5 mr-2" />
-                Shop Now
+                Browse Equipment
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
@@ -101,9 +101,9 @@ const Index = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
+            <h2 className="text-3xl font-bold mb-4">Featured Equipment</h2>
             <p className="text-muted-foreground text-lg">
-              Check out our most popular items
+              Discover our most trusted medical devices
             </p>
           </div>
           
@@ -153,7 +153,7 @@ const Index = () => {
           <div className="text-center mt-12">
             <Button asChild size="lg">
               <Link to="/shop">
-                View All Products
+                View All Equipment
               </Link>
             </Button>
           </div>
@@ -163,10 +163,10 @@ const Index = () => {
       {/* Newsletter Section */}
       <section className="py-16 bg-muted/30">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
+          <h2 className="text-3xl font-bold mb-4">Stay Informed</h2>
           <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Subscribe to our newsletter and be the first to know about new products, 
-            special offers, and exclusive deals.
+            Subscribe to our newsletter for the latest medical equipment updates, 
+            health tips, and exclusive offers for healthcare professionals.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input

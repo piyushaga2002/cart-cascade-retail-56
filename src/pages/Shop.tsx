@@ -8,83 +8,83 @@ import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/hooks/use-toast';
 
-// Mock product data
+// Medical equipment products
 const products = [
   {
     id: 1,
-    name: 'Premium Wireless Headphones',
+    name: 'Digital Blood Pressure Monitor',
     price: 299.99,
     originalPrice: 399.99,
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=300&fit=crop',
+    image: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&h=300&fit=crop',
     rating: 4.8,
     reviews: 124,
-    category: 'Electronics',
+    category: 'Diagnostic',
     inStock: true,
-    description: 'High-quality wireless headphones with noise cancellation'
+    description: 'Professional digital blood pressure monitor with advanced accuracy'
   },
   {
     id: 2,
-    name: 'Smart Fitness Watch',
-    price: 199.99,
-    originalPrice: 249.99,
-    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&h=300&fit=crop',
+    name: 'Digital Thermometer',
+    price: 49.99,
+    originalPrice: 69.99,
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop',
     rating: 4.6,
     reviews: 89,
-    category: 'Electronics',
+    category: 'Diagnostic',
     inStock: true,
-    description: 'Track your fitness goals with this advanced smartwatch'
+    description: 'Fast and accurate digital thermometer for clinical use'
   },
   {
     id: 3,
-    name: 'Organic Cotton T-Shirt',
-    price: 29.99,
-    originalPrice: 39.99,
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=300&fit=crop',
-    rating: 4.5,
-    reviews: 56,
-    category: 'Clothing',
+    name: 'Stethoscope - Professional Grade',
+    price: 129.99,
+    originalPrice: 179.99,
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=300&h=300&fit=crop',
+    rating: 4.9,
+    reviews: 203,
+    category: 'Diagnostic',
     inStock: true,
-    description: 'Comfortable organic cotton t-shirt in various colors'
+    description: 'High-quality stethoscope for medical professionals'
   },
   {
     id: 4,
-    name: 'Professional Camera',
-    price: 899.99,
-    originalPrice: 1199.99,
-    image: 'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=300&h=300&fit=crop',
-    rating: 4.9,
-    reviews: 203,
-    category: 'Electronics',
+    name: 'Wheelchair - Standard',
+    price: 199.99,
+    originalPrice: 249.99,
+    image: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=300&h=300&fit=crop',
+    rating: 4.5,
+    reviews: 67,
+    category: 'Mobility',
     inStock: true,
-    description: 'Capture stunning photos with this professional camera'
+    description: 'Comfortable and durable standard wheelchair'
   },
   {
     id: 5,
-    name: 'Leather Laptop Bag',
-    price: 149.99,
-    originalPrice: 199.99,
-    image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300&h=300&fit=crop',
+    name: 'Pulse Oximeter',
+    price: 79.99,
+    originalPrice: 99.99,
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=300&h=300&fit=crop',
     rating: 4.7,
-    reviews: 78,
-    category: 'Accessories',
+    reviews: 142,
+    category: 'Diagnostic',
     inStock: true,
-    description: 'Premium leather laptop bag for professionals'
+    description: 'Accurate pulse oximeter for oxygen saturation monitoring'
   },
   {
     id: 6,
-    name: 'Running Shoes',
-    price: 129.99,
-    originalPrice: 159.99,
-    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300&h=300&fit=crop',
+    name: 'First Aid Kit - Professional',
+    price: 89.99,
+    originalPrice: 119.99,
+    image: 'https://images.unsplash.com/photo-1603398938013-07be20e6b8a3?w=300&h=300&fit=crop',
     rating: 4.4,
-    reviews: 142,
-    category: 'Sports',
+    reviews: 78,
+    category: 'Emergency',
     inStock: true,
-    description: 'Comfortable running shoes for all terrains'
+    description: 'Comprehensive first aid kit for medical emergencies'
   }
 ];
 
-const categories = ['All', 'Electronics', 'Clothing', 'Accessories', 'Sports'];
+const categories = ['All', 'Diagnostic', 'Mobility', 'Emergency', 'Surgical'];
 
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -106,7 +106,7 @@ const Shop = () => {
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-4">Shop</h1>
+          <h1 className="text-3xl font-bold mb-4">Medical Equipment</h1>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
               <Button

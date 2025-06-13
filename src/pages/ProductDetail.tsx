@@ -8,36 +8,36 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCart } from '@/hooks/useCart';
 import { toast } from '@/hooks/use-toast';
 
-// Mock product data (same as Shop page - in real app this would come from API)
+// Medical equipment products (same as Shop page - in real app this would come from API)
 const products = [
   {
     id: 1,
-    name: 'Premium Wireless Headphones',
+    name: 'Digital Blood Pressure Monitor',
     price: 299.99,
     originalPrice: 399.99,
     images: [
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=600&h=600&fit=crop',
-      'https://images.unsplash.com/photo-1496957961599-e35b69ef5d7c?w=600&h=600&fit=crop'
+      'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=600&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&h=600&fit=crop',
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600&h=600&fit=crop'
     ],
     rating: 4.8,
     reviews: 124,
-    category: 'Electronics',
+    category: 'Diagnostic',
     inStock: true,
-    description: 'Experience premium sound quality with these wireless headphones featuring advanced noise cancellation technology.',
+    description: 'Professional digital blood pressure monitor with advanced accuracy and memory storage for multiple users.',
     features: [
-      'Active Noise Cancellation',
-      '30-hour battery life',
-      'Quick charge technology',
-      'Premium materials',
-      'Wireless connectivity'
+      'Clinically validated accuracy',
+      'Memory for 2 users (120 readings each)',
+      'Large LCD display',
+      'Irregular heartbeat detection',
+      'WHO blood pressure classification'
     ],
     specifications: {
-      'Driver Size': '40mm',
-      'Frequency Response': '20Hz - 20kHz',
-      'Battery Life': '30 hours',
-      'Charging Time': '2 hours',
-      'Weight': '250g'
+      'Measurement Range': '0-300 mmHg',
+      'Accuracy': '±3 mmHg',
+      'Memory': '240 readings',
+      'Power': '4 AA batteries',
+      'Cuff Size': '22-42 cm'
     }
   }
 ];
@@ -67,7 +67,7 @@ const ProductDetail = () => {
         <Button asChild variant="ghost" className="mb-6">
           <Link to="/shop">
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Shop
+            Back to Equipment
           </Link>
         </Button>
 
