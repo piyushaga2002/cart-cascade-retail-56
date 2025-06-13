@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Star, Heart, Eye } from 'lucide-react';
@@ -89,11 +88,14 @@ const categories = ['All', 'Diagnostic', 'Mobility', 'Emergency', 'Surgical'];
 const Shop = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [wishlist, setWishlist] = useState<number[]>([]);
+  const [showWishlist, setShowWishlist] = useState(false);
   const { addToCart } = useCart();
 
   const filteredProducts = selectedCategory === 'All' 
     ? products 
     : products.filter(product => product.category === selectedCategory);
+
+  const wishlistProducts = products.filter(product => wishlist.includes(product.id));
 
   const handleAddToCart = (product: any) => {
     addToCart(product);
@@ -104,11 +106,17 @@ const Shop = () => {
   };
 
   const toggleWishlist = (productId: number) => {
-    setWishlist(prev => 
-      prev.includes(productId) 
+    setWishlist(prev => {
+      const newWishlist = prev.includes(productId) 
         ? prev.filter(id => id !== productId)
-        : [...prev, productId]
-    );
+        : [...prev, productId];
+      
+      if (newWishlist.length === 0) {
+        setShowWishlist(false);
+      }
+      
+      return newWishlist;
+    });
   };
 
   return (
@@ -122,114 +130,257 @@ const Shop = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 animate-fade-in">
-          <h1 className="text-3xl font-bold mb-4">Medical Equipment</h1>
-          <div className="flex flex-wrap gap-2">
-            {categories.map((category) => (
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
+            <h1 className="text-3xl font-bold mb-4 md:mb-0">Medical Equipment</h1>
+            
+            {/* Wishlist Toggle Button */}
+            {wishlist.length > 0 && (
               <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                onClick={() => setSelectedCategory(category)}
-                className="mb-2 transition-all duration-300 hover:scale-105 hover:shadow-md"
+                variant={showWishlist ? "default" : "outline"}
+                onClick={() => setShowWishlist(!showWishlist)}
+                className="mb-4 md:mb-0 transition-all duration-300 hover:scale-105"
               >
-                {category}
+                <Heart className={`w-4 h-4 mr-2 ${showWishlist ? 'fill-white' : 'fill-red-500 text-red-500'}`} />
+                My Wishlist ({wishlist.length})
               </Button>
+            )}
+          </div>
+
+          {/* Category Filters - Only show when not viewing wishlist */}
+          {!showWishlist && (
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant={selectedCategory === category ? "default" : "outline"}
+                  onClick={() => setSelectedCategory(category)}
+                  className="mb-2 transition-all duration-300 hover:scale-105 hover:shadow-md"
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Wishlist Section */}
+        {showWishlist && (
+          <div className="mb-8">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-semibold flex items-center">
+                <Heart className="w-6 h-6 mr-2 fill-red-500 text-red-500" />
+                My Wishlist
+              </h2>
+              <Button
+                variant="ghost"
+                onClick={() => setShowWishlist(false)}
+                className="hover:bg-primary hover:text-primary-foreground"
+              >
+                Back to All Products
+              </Button>
+            </div>
+            
+            {wishlistProducts.length === 0 ? (
+              <div className="text-center py-12 animate-fade-in">
+                <Heart className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
+                <p className="text-muted-foreground text-lg">Your wishlist is empty</p>
+                <Button
+                  variant="outline"
+                  onClick={() => setShowWishlist(false)}
+                  className="mt-4"
+                >
+                  Browse Products
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {wishlistProducts.map((product, index) => (
+                  <Card 
+                    key={product.id} 
+                    className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in border-red-200"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      {product.originalPrice > product.price && (
+                        <Badge className="absolute top-2 left-2 bg-red-500 animate-pulse">
+                          Sale
+                        </Badge>
+                      )}
+                      
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <div className="flex space-x-2">
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => toggleWishlist(product.id)}
+                            className="hover:scale-110 transition-transform"
+                          >
+                            <Heart className="w-4 h-4 fill-red-500 text-red-500" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="secondary"
+                            asChild
+                            className="hover:scale-110 transition-transform"
+                          >
+                            <Link to={`/product/${product.id}`}>
+                              <Eye className="w-4 h-4" />
+                            </Link>
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <CardContent className="p-4">
+                      <Link to={`/product/${product.id}`}>
+                        <h3 className="font-semibold text-lg mb-2 hover:text-primary transition-colors duration-200 story-link">
+                          {product.name}
+                        </h3>
+                      </Link>
+                      <div className="flex items-center mb-2">
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <Star 
+                              key={i}
+                              className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                            />
+                          ))}
+                        </div>
+                        <span className="ml-2 text-sm text-muted-foreground">
+                          {product.rating} ({product.reviews} reviews)
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-lg font-bold text-primary">${product.price}</span>
+                        {product.originalPrice > product.price && (
+                          <span className="text-sm text-muted-foreground line-through">
+                            ${product.originalPrice}
+                          </span>
+                        )}
+                      </div>
+                      <Badge variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+                        {product.category}
+                      </Badge>
+                    </CardContent>
+                    
+                    <CardFooter className="p-4 pt-0">
+                      <Button
+                        onClick={() => handleAddToCart(product)}
+                        className="w-full hover:shadow-lg transition-all duration-300 hover:scale-105"
+                        disabled={!product.inStock}
+                      >
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Regular Products Grid - Only show when not viewing wishlist */}
+        {!showWishlist && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredProducts.map((product, index) => (
+              <Card 
+                key={product.id} 
+                className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="relative overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {product.originalPrice > product.price && (
+                    <Badge className="absolute top-2 left-2 bg-red-500 animate-pulse">
+                      Sale
+                    </Badge>
+                  )}
+                  
+                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                    <div className="flex space-x-2">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        onClick={() => toggleWishlist(product.id)}
+                        className="hover:scale-110 transition-transform"
+                      >
+                        <Heart 
+                          className={`w-4 h-4 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : ''}`} 
+                        />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        asChild
+                        className="hover:scale-110 transition-transform"
+                      >
+                        <Link to={`/product/${product.id}`}>
+                          <Eye className="w-4 h-4" />
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+                
+                <CardContent className="p-4">
+                  <Link to={`/product/${product.id}`}>
+                    <h3 className="font-semibold text-lg mb-2 hover:text-primary transition-colors duration-200 story-link">
+                      {product.name}
+                    </h3>
+                  </Link>
+                  <div className="flex items-center mb-2">
+                    <div className="flex">
+                      {[...Array(5)].map((_, i) => (
+                        <Star 
+                          key={i}
+                          className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
+                        />
+                      ))}
+                    </div>
+                    <span className="ml-2 text-sm text-muted-foreground">
+                      {product.rating} ({product.reviews} reviews)
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg font-bold text-primary">${product.price}</span>
+                    {product.originalPrice > product.price && (
+                      <span className="text-sm text-muted-foreground line-through">
+                        ${product.originalPrice}
+                      </span>
+                    )}
+                  </div>
+                  <Badge variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+                    {product.category}
+                  </Badge>
+                </CardContent>
+                
+                <CardFooter className="p-4 pt-0">
+                  <Button
+                    onClick={() => handleAddToCart(product)}
+                    className="w-full hover:shadow-lg transition-all duration-300 hover:scale-105"
+                    disabled={!product.inStock}
+                  >
+                    <ShoppingCart className="w-4 h-4 mr-2" />
+                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                  </Button>
+                </CardFooter>
+              </Card>
             ))}
           </div>
-        </div>
+        )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product, index) => (
-            <Card 
-              key={product.id} 
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="relative overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                {product.originalPrice > product.price && (
-                  <Badge className="absolute top-2 left-2 bg-red-500 animate-pulse">
-                    Sale
-                  </Badge>
-                )}
-                
-                {/* Overlay with quick actions */}
-                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
-                  <div className="flex space-x-2">
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      onClick={() => toggleWishlist(product.id)}
-                      className="hover:scale-110 transition-transform"
-                    >
-                      <Heart 
-                        className={`w-4 h-4 ${wishlist.includes(product.id) ? 'fill-red-500 text-red-500' : ''}`} 
-                      />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      asChild
-                      className="hover:scale-110 transition-transform"
-                    >
-                      <Link to={`/product/${product.id}`}>
-                        <Eye className="w-4 h-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              
-              <CardContent className="p-4">
-                <Link to={`/product/${product.id}`}>
-                  <h3 className="font-semibold text-lg mb-2 hover:text-primary transition-colors duration-200 story-link">
-                    {product.name}
-                  </h3>
-                </Link>
-                <div className="flex items-center mb-2">
-                  <div className="flex">
-                    {[...Array(5)].map((_, i) => (
-                      <Star 
-                        key={i}
-                        className={`w-4 h-4 ${i < Math.floor(product.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} 
-                      />
-                    ))}
-                  </div>
-                  <span className="ml-2 text-sm text-muted-foreground">
-                    {product.rating} ({product.reviews} reviews)
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-lg font-bold text-primary">${product.price}</span>
-                  {product.originalPrice > product.price && (
-                    <span className="text-sm text-muted-foreground line-through">
-                      ${product.originalPrice}
-                    </span>
-                  )}
-                </div>
-                <Badge variant="secondary" className="hover:bg-primary hover:text-primary-foreground transition-colors">
-                  {product.category}
-                </Badge>
-              </CardContent>
-              
-              <CardFooter className="p-4 pt-0">
-                <Button
-                  onClick={() => handleAddToCart(product)}
-                  className="w-full hover:shadow-lg transition-all duration-300 hover:scale-105"
-                  disabled={!product.inStock}
-                >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-
-        {filteredProducts.length === 0 && (
+        {/* No products message - Only show when not viewing wishlist */}
+        {!showWishlist && filteredProducts.length === 0 && (
           <div className="text-center py-12 animate-fade-in">
             <p className="text-muted-foreground text-lg">No products found in this category.</p>
           </div>
