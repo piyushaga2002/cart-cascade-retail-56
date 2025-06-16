@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, CreditCard } from 'lucide-react';
@@ -40,7 +39,7 @@ const Checkout = () => {
       script.src = 'https://checkout.razorpay.com/v1/checkout.js';
       script.onload = () => {
         const options = {
-          key: 'rzp_test_9999999999', // Replace with your Razorpay test key
+          key: 'fq3eTeYygrQm09UX98HHwIvL', // Your Razorpay API key
           amount: Math.round(getTotalPrice() * 1.1 * 100), // Amount in paise
           currency: 'INR',
           name: 'Your Store Name',
