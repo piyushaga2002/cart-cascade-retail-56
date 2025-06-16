@@ -34,49 +34,114 @@ const Checkout = () => {
     setLoading(true);
     
     try {
-      // Razorpay integration
-      const script = document.createElement('script');
-      script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-      script.onload = () => {
-        const options = {
-          key: 'fq3eTeYygrQm09UX98HHwIvL', // Your Razorpay API key
-          amount: Math.round(getTotalPrice() * 1.1 * 100), // Amount in paise
-          currency: 'INR',
-          name: 'Your Store Name',
-          description: 'Purchase from Your Store',
-          order_id: `order_${Date.now()}`, // You should generate this from backend
-          handler: function (response: any) {
-            toast({
-              title: "Payment Successful!",
-              description: `Payment ID: ${response.razorpay_payment_id}`,
-            });
-            clearCart();
-            // Redirect to success page or order confirmation
-          },
-          prefill: {
-            name: `${formData.firstName} ${formData.lastName}`,
-            email: formData.email,
-            contact: formData.phone
-          },
-          theme: {
-            color: '#3399cc'
-          }
+      console.log('Starting payment process...');
+      
+      // Check if Razorpay script is already loaded
+      if (!(window as any).Razorpay) {
+        console.log('Loading Razorpay script...');
+        
+        const script = document.createElement('script');
+        script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+        
+        script.onload = () => {
+          console.log('Razorpay script loaded successfully');
+          initializeRazorpay();
         };
         
-        const rzp = new (window as any).Razorpay(options);
-        rzp.open();
-      };
-      
-      document.body.appendChild(script);
+        script.onerror = () => {
+          console.error('Failed to load Razorpay script');
+          toast({
+            title: "Payment Error",
+            description: "Failed to load payment gateway. Please check your internet connection.",
+            variant: "destructive"
+          });
+          setLoading(false);
+        };
+        
+        document.body.appendChild(script);
+      } else {
+        console.log('Razorpay script already loaded');
+        initializeRazorpay();
+      }
     } catch (error) {
+      console.error('Payment initialization error:', error);
       toast({
         title: "Payment Error",
         description: "Failed to initialize payment. Please try again.",
         variant: "destructive"
       });
+      setLoading(false);
     }
+  };
+
+  const initializeRazorpay = () => {
+    const totalAmount = Math.round(getTotalPrice() * 83 * 1.1 * 100); // Convert to paise
+    console.log('Total amount in paise:', totalAmount);
     
-    setLoading(false);
+    const options = {
+      key: 'fq3eTeYygrQm09UX98HHwIvL', // Your Razorpay API key
+      amount: totalAmount,
+      currency: 'INR',
+      name: 'Medical Equipment Store',
+      description: 'Purchase from Medical Equipment Store',
+      image: '/favicon.ico', // Add your logo here
+      order_id: `order_${Date.now()}`,
+      handler: function (response: any) {
+        console.log('Payment successful:', response);
+        toast({
+          title: "Payment Successful!",
+          description: `Payment ID: ${response.razorpay_payment_id}`,
+        });
+        clearCart();
+        setLoading(false);
+        // You can redirect to a success page here
+      },
+      prefill: {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        contact: formData.phone
+      },
+      theme: {
+        color: '#3399cc'
+      },
+      modal: {
+        ondismiss: function() {
+          console.log('Payment modal dismissed');
+          setLoading(false);
+          toast({
+            title: "Payment Cancelled",
+            description: "Payment was cancelled by user.",
+            variant: "destructive"
+          });
+        }
+      }
+    };
+    
+    try {
+      console.log('Creating Razorpay instance with options:', options);
+      const rzp = new (window as any).Razorpay(options);
+      
+      rzp.on('payment.failed', function (response: any) {
+        console.error('Payment failed:', response.error);
+        toast({
+          title: "Payment Failed",
+          description: `Error: ${response.error.description || 'Payment failed. Please try again.'}`,
+          variant: "destructive"
+        });
+        setLoading(false);
+      });
+      
+      console.log('Opening Razorpay checkout...');
+      rzp.open();
+    } catch (error) {
+      console.error('Error creating Razorpay instance:', error);
+      toast({
+        title: "Payment Error",
+        description: "Failed to open payment gateway. Please try again.",
+        variant: "destructive"
+      });
+      setLoading(false);
+    }
   };
 
   const isFormValid = formData.email && formData.firstName && formData.lastName && 
@@ -190,7 +255,7 @@ const Checkout = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="state">State</Label>
+                    <Label htmlFor="state">State</State>
                     <Input
                       id="state"
                       name="state"
