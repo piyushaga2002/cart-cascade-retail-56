@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, CreditCard } from 'lucide-react';
@@ -255,7 +256,7 @@ const Checkout = () => {
                     />
                   </div>
                   <div>
-                    <Label htmlFor="state">State</State>
+                    <Label htmlFor="state">State</Label>
                     <Input
                       id="state"
                       name="state"
